@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "This repo defines the JSON-LD for the custom vocabulary used in the Ligo Protocol.",
   "license": "MIT",
+  "scripts": {
+    "build": "node ./src/publish.mjs"
+  },
   "devDependencies": {
     "@ceramicnetwork/http-client": "^2.3.1",
     "@ceramicnetwork/stream-tile": "^2.4.0",
