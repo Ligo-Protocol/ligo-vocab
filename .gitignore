@@ -1,1 +1,5 @@
 .obsidian
+.envrc
+
+node_modules
+shell.nix

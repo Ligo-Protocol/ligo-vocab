@@ -1,0 +1,26 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+jobs:
+  release:
+    name: Release code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+      - name: Install
+        run: yarn
+      - name: Build
+        run: yarn build
+      - name: Release
+        uses: jef/conventional-commits-release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}

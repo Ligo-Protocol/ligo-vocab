@@ -1,0 +1,146 @@
+{
+  "@context": {
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "https://schema.org/"
+  },
+  "@graph": [
+    {
+      "@id": "ligo:LigoAgreement",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "Defines an agreement between two parties.",
+      "rdfs:label": "LigoAgreement"
+    },
+    {
+      "@id": "ligo:order",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The order that started the agreement.",
+      "rdfs:label": "order",
+      "rdfs:domain": "ligo:LigoAgreement",
+      "rdfs:range": "schema:Order"
+    },
+    {
+      "@id": "ligo:reservation",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Details of the reservation.",
+      "rdfs:label": "reservation",
+      "rdfs:domain": "ligo:LigoAgreement",
+      "rdfs:range": "schema:RentalCarReservation"
+    },
+    {
+      "@id": "ligo:LigoAgreementState",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "Contains information needed to exchange value and services (e.g. the state of the vehicle, messages, photos, etc).",
+      "rdfs:label": "LigoAgreementState"
+    },
+    {
+      "@id": "ligo:startFuelLevel",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The level of the fuel tank or in the case of electric cars, the battery, at the start of the trip.",
+      "rdfs:label": "startFuelLevel",
+      "rdfs:domain": "ligo:LigoAgreementState",
+      "rdfs:range": "schema:QuantitativeValue"
+    },
+    {
+      "@id": "ligo:startOdometer",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The odometer reading at the start of the trip.",
+      "rdfs:label": "startOdometer",
+      "rdfs:domain": "ligo:LigoAgreementState",
+      "rdfs:range": "schema:QuantitativeValue"
+    },
+    {
+      "@id": "ligo:startLocation",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The location of the vehicle at the start of the trip.",
+      "rdfs:label": "startLocation",
+      "rdfs:domain": "ligo:LigoAgreementState",
+      "rdfs:range": "schema:GeoCoordinates"
+    },
+    {
+      "@id": "ligo:endFuelLevel",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The level of the fuel tank or in the case of electric cars, the battery, at the end of the trip.",
+      "rdfs:label": "endFuelLevel",
+      "rdfs:domain": "ligo:LigoAgreementState",
+      "rdfs:range": "schema:QuantitativeValue"
+    },
+    {
+      "@id": "ligo:endOdometer",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The odometer reading at the end of the trip.",
+      "rdfs:label": "endOdometer",
+      "rdfs:domain": "ligo:LigoAgreementState",
+      "rdfs:range": "schema:QuantitativeValue"
+    },
+    {
+      "@id": "ligo:endLocation",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The location of the vehicle at the end of the trip.",
+      "rdfs:label": "endLocation",
+      "rdfs:domain": "ligo:LigoAgreementState",
+      "rdfs:range": "schema:GeoCoordinates"
+    },
+    {
+      "@id": "ligo:LigoPaymentMethod",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "An enumeration defining the different payment methods accepted in Ligo.",
+      "rdfs:label": "LigoPaymentMethod",
+      "rdfs:subClassOf": {
+        "@id": "schema:PaymentMethod"
+      }
+    },
+    {
+      "@id": "ligo:LigoSafeEscrow",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "The primary payment method defined by [Transacting](https://ligo-book.codyhatfield.me/Transacting/).",
+      "rdfs:label": "LigoSafeEscrow",
+      "rdfs:subClassOf": {
+        "@id": "ligo:LigoPaymentMethod"
+      }
+    },
+    {
+      "@id": "ligo:vehicleOracle",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The oracle used as the source of truth for vehicle data.",
+      "rdfs:label": "vehicleOracle",
+      "rdfs:domain": "ligo:LigoSafeEscrow",
+      "rdfs:range": "schema:LigoVehicleOracle"
+    },
+    {
+      "@id": "ligo:erc792Arbitrator",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The arbitrator used to resolve subjective disputes.",
+      "rdfs:label": "erc792Arbitrator",
+      "rdfs:domain": "ligo:LigoSafeEscrow",
+      "rdfs:range": "schema:Text"
+    },
+    {
+      "@id": "ligo:LigoVehicleOracle",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "An enumeration defining the different oracles that can be used as the source of truth for vehicle data.",
+      "rdfs:label": "LigoVehicleOracle",
+      "rdfs:subClassOf": {
+        "@id": "schema:Enumeration"
+      }
+    },
+    {
+      "@id": "ligo:SmartcarVehicleOracle",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "Vehicle oracle that uses Smartcar.",
+      "rdfs:label": "SmartcarVehicleOracle",
+      "rdfs:subClassOf": {
+        "@id": "schema:LigoVehicleOracle"
+      }
+    },
+    {
+      "@id": "ligo:StandardFleetVehicleOracle",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "Vehicle oracle that uses Standard Fleet.",
+      "rdfs:label": "StandardFleetVehicleOracle",
+      "rdfs:subClassOf": {
+        "@id": "schema:LigoVehicleOracle"
+      }
+    }
+  ]
+}
