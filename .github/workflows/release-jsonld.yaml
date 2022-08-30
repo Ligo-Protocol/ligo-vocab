@@ -1,4 +1,4 @@
-name: Release
+name: Release JSON-LD
 on:
   push:
     branches:
@@ -23,7 +23,7 @@ jobs:
         env:
           CERAMIC_SEED: ${{ secrets.CERAMIC_SEED }}
           SCHEMA_DOC_ID: "k3y52l7qbv1fry1t8bfdg3rlbhlygi7mw1a0hhryd9dffm625dxsybr86k1yi6328"
-        run: yarn build
+        run: yarn jsonld:publish
       - name: Release
         uses: jef/conventional-commits-release-action@v1
         with:

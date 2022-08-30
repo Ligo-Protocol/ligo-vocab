@@ -4,7 +4,7 @@
   "description": "This repo defines the JSON-LD for the custom vocabulary used in the Ligo Protocol.",
   "license": "MIT",
   "scripts": {
-    "build": "node ./src/publish.mjs",
+    "jsonld:publish": "cd src/json-ld && node publish.mjs",
     "composedb:publish-composite": "cd src/composedb && node publish-composite.mjs"
   },
   "devDependencies": {
