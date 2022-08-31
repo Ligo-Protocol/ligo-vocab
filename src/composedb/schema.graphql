@@ -38,7 +38,7 @@ type GeoShape {
 
 type Car {
   # The release date of a vehicle model (often used to differentiate versions of the same make and model).
-  modelDate: Date
+  modelDate: String @string(minLength: 4, maxLength: 4)
   # A short text indicating the configuration of the vehicle, e.g. '5dr hatchback ST 2.5 MT 225 hp' or 'limited edition'.
   vehicleConfiguration: String @string(maxLength: 100)
   # The Vehicle Identification Number (VIN) is a unique serial number used by the automotive industry to identify individual motor vehicles.
