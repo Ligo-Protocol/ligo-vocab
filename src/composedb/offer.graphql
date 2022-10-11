@@ -11,20 +11,6 @@ type QuantitativeValue {
   value: Float
 }
 
-type Person {
-  identifier: DID
-}
-
-type Organization {
-  identifier: DID
-  name: String @string(maxLength: 100)
-  legalName: String @string(maxLength: 100)
-}
-
-type Brand {
-  name: String @string(maxLength: 100)
-}
-
 type GeoShape {
   # A box is the area enclosed by the rectangle formed by two points. The first point is the lower corner, the second point is the upper corner. A box is expressed as two points separated by a space character.
   box: String @string(maxLength: 100)
@@ -34,21 +20,6 @@ type GeoShape {
   polygon: String @string(maxLength: 100)
   # The postal code. For example, 94043.
   postalCode: String @string(maxLength: 100)
-}
-
-type Car {
-  # The release date of a vehicle model (often used to differentiate versions of the same make and model).
-  modelDate: String @string(minLength: 4, maxLength: 4)
-  # A short text indicating the configuration of the vehicle, e.g. '5dr hatchback ST 2.5 MT 225 hp' or 'limited edition'.
-  vehicleConfiguration: String @string(maxLength: 100)
-  # The Vehicle Identification Number (VIN) is a unique serial number used by the automotive industry to identify individual motor vehicles.
-  vehicleIdentificationNumber: String @string(maxLength: 17)
-  # The brand(s) associated with a product or service, or the brand(s) maintained by an organization or business person. */
-  brand: Brand
-  # The manufacturer of the product.
-  manufacturer: Organization
-  # The model of the product. Use with the URL of a ProductModel or a textual representation of the model identifier. The URL of the ProductModel can be from an external source. It is recommended to additionally provide strong product identifiers via the gtin8/gtin13/gtin14 and mpn properties.
-  model: String @string(maxLength: 100)
 }
 
 type UnitPriceSpecification {
@@ -77,6 +48,13 @@ type LigoSafeEscrow {
   erc792Arbitrator: String @string(maxLength: 100)
 }
 
+type Car
+  @loadModel(
+    id: "kjzl6hvfrbw6c8r09rr589a19byisy55r64jkv41yg8kzf4kct64e6euuqxmjn5"
+  ) {
+  id: ID
+}
+
 type Offer
   @createModel(
     accountRelation: LIST
@@ -87,7 +65,8 @@ type Offer
   # Image(s) of specific vehicle being offered.
   image: String @string(maxLength: 100)
   # The vehicle being offered.
-  itemOffered: Car
+  itemOfferedID: StreamID @documentReference(model: "Car")
+  itemOffered: Car @relationDocument(property: "itemOfferedID")
   # The entity offering the rental.
   seller: DID
   # The approximate area where the vehicle is available to pickup. Can be used to obfuscate the precise location.

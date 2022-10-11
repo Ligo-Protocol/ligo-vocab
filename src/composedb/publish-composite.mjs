@@ -6,9 +6,11 @@ import { fromString } from "uint8arrays/from-string";
 import {
   createComposite,
   writeEncodedComposite,
+  writeEncodedCompositeRuntime,
 } from "@composedb/devtools-node";
+import { Composite } from "@composedb/devtools";
 
-const ceramic = new CeramicClient("https://ceramic-clay.3boxlabs.com");
+const ceramic = new CeramicClient("https://ceramic-clay.oort.codyhatfield.me");
 
 // `seed` must be a 32-byte long Uint8Array
 async function authenticateCeramic(seed) {
@@ -24,10 +26,22 @@ async function run() {
   const seed = fromString(process.env.CERAMIC_SEED, "base16");
   await authenticateCeramic(seed);
 
-  const composite = await createComposite(ceramic, "schema.graphql");
+  const carComposite = await createComposite(ceramic, "car.graphql");
+  const offerComposite = await createComposite(ceramic, "offer.graphql");
 
-  // Replace by the path to the encoded composite file
-  await writeEncodedComposite(composite, "composite.json");
+  await writeEncodedComposite(carComposite, "car-composite.json");
+  await writeEncodedComposite(offerComposite, "offer-composite.json");
+
+  const mergedComposite = Composite.from([carComposite, offerComposite]);
+  await writeEncodedComposite(mergedComposite, "composite.json");
+
+  await writeEncodedCompositeRuntime(
+    ceramic,
+    "composite.json",
+    "../__generated__/definition.js"
+  );
+
+  await offerComposite.startIndexingOn(ceramic);
 }
 
 run();
